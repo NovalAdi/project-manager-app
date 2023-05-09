@@ -40,7 +40,7 @@ class UserProjectController extends Controller
                     404
                 );
             } else {
-                $user_ids = $value;
+                $user_ids[] = $value;
             }
         }
 
@@ -55,7 +55,7 @@ class UserProjectController extends Controller
             );
         }
 
-        $project->users()->attach($user_ids);
+        $project->users()->sync($user_ids);
 
         $data = DB::table('user_projects')->where('project_id', '=', $project->id)->get();
 
