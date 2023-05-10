@@ -38,12 +38,12 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
 // ! Authenticated
-Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::group(['middleware' => ['auth:sanctum',]], function () {
 
     Route::post('logout', [AuthController::class, 'logout']);
 
     // task
-    Route::get('/task', [TaskController::class, 'index']);
+    Route::get('/task', [TaskController::class, 'index'])->middleware('permission:read-task');
     Route::get('/task/{id}', [TaskController::class, 'show']);
     Route::post('/task', [TaskController::class, 'create']);
     Route::post('/task/{id}', [TaskController::class, 'update']);
@@ -58,7 +58,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // user
     Route::get('/user', [UserController::class, 'index']);
-    Route::get('/user/{id}', [UserController::class, 'show']);
+    Route::get('/manager/{id}', [UserController::class, 'showManager'])->middleware('permission:show-manager');
+    Route::get('/user/{id}', [UserController::class, 'showEmployee'])->middleware('permission:show-employee');
     Route::post('/user/{id}', [UserController::class, 'update']);
     Route::delete('/user/{id}', [UserController::class, 'delete']);
 

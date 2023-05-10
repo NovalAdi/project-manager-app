@@ -11,7 +11,12 @@ class Project extends Model
 
     protected $guarded = [];
 
-    public function users()
+    public function manager()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function participants()
     {
         return $this->belongsToMany(User::class, 'user_projects', 'project_id', 'user_id');
     }

@@ -14,7 +14,18 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $permissions = ['create-task', 'read-task', 'update-task', 'delete-task', 'create-project', 'read-project', 'update-project', 'delete-project',];
+        $permissions = [
+            'create-task',
+            'read-task',
+            'update-task',
+            'delete-task',
+            'create-project',
+            'read-project',
+            'update-project',
+            'delete-project',
+            'show-manager',
+            'show-employee',
+        ];
         foreach ($permissions as $permission) {
             Permission::create([
                 'name' => $permission
@@ -29,6 +40,7 @@ class PermissionSeeder extends Seeder
             'read-task',
             'update-task',
             'read-project',
+            'show-employee'
         ]);
     }
 }

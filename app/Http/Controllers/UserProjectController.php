@@ -55,7 +55,7 @@ class UserProjectController extends Controller
             );
         }
 
-        $project->users()->sync($user_ids);
+        $project->participants()->sync($user_ids);
 
         $data = DB::table('user_projects')->where('project_id', '=', $project->id)->get();
 
@@ -70,7 +70,7 @@ class UserProjectController extends Controller
 
     public function show($id)
     {
-        $project = Project::find($id);
+        $project = Project::with(['participants'])->find($id);
         if (!$project) {
             return response()->json(
                 [
@@ -81,16 +81,13 @@ class UserProjectController extends Controller
             );
         }
 
-        $user_name = [];
-        foreach ($project->users as $user) {
-            $user_name[] = $user->name;
-        }
+
 
         return response()->json(
             [
                 'status' => true,
-                'project_name' => $project->name,
-                'participants' => $user_name
+                'data' => $project
+
             ]
         );
     }

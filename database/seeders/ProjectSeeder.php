@@ -18,12 +18,14 @@ class ProjectSeeder extends Seeder
                 'name' => 'Home App',
                 'desk' => 'A simple home app',
                 'deadline' => '2024-01-13',
+                'user_id' => 1,
                 'token' => random_int(100000, 999999)
             ],
             [
                 'name' => 'Toilet App',
                 'desk' => 'An app about Toilet',
                 'deadline' => '2023-12-24',
+                'user_id' => 1,
                 'token' => random_int(100000, 999999)
             ],
         ];
