@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
+use App\Models\Manager;
 use App\Models\Project;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class UserProjectController extends Controller
+class EmployeeProjectController extends Controller
 {
     public function create(Request $req)
     {
         $input = $req->all();
         $validator = Validator::make($input, [
             'project_id' => 'required',
-            'user_id' => 'required'
+            'employee_id' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json(
@@ -27,37 +28,44 @@ class UserProjectController extends Controller
             );
         }
 
-        $user_ids = [];
+        $project = Project::find($input['project_id']);
+        if (!$project) {
+            return response()->json([
+                'status' => false,
+                'message' => 'project not found'
+            ], 404);
+        }
 
-        foreach ($input['user_id'] as $value) {
-            $user = User::find($value);
-            if (!$user) {
+        $manager = Manager::where('user_id', '=', $project->manager_id)->first();
+        if (!$manager) {
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => 'manager not found'
+                ],404);
+        }
+
+        $employee_ids = [];
+        foreach ($input['employee_id'] as $value) {
+            $employee = Employee::find($value);
+            if (!$employee) {
                 return response()->json(
                     [
                         'status' => false,
-                        'message' => 'user not found'
+                        'message' => 'employee not found'
                     ],
                     404
                 );
             } else {
-                $user_ids[] = $value;
+                $employee_ids[] = $value;
             }
         }
 
-        $project = Project::find($input['project_id']);
-        if (!$project) {
-            return response()->json(
-                [
-                    'status' => false,
-                    'message' => 'project not found'
-                ],
-                404
-            );
-        }
+        $manager->employees()->sync($employee_ids);
 
-        $project->participants()->sync($user_ids);
+        $project->participants()->sync($employee_ids);
 
-        $data = DB::table('user_projects')->where('project_id', '=', $project->id)->get();
+        $data = DB::table('employee_project')->where('project_id', '=', $project->id)->get();
 
         return response()->json(
             [
@@ -80,8 +88,6 @@ class UserProjectController extends Controller
                 404
             );
         }
-
-
 
         return response()->json(
             [

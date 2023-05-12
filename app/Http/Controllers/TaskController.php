@@ -22,7 +22,7 @@ class TaskController extends Controller
 
     public function show($id)
     {
-        $task = Task::with(['project', 'user'])->find($id);
+        $task = Task::with(['project', 'employee'])->find($id);
         if (!$task) {
             return response()->json(
                 [

@@ -18,25 +18,25 @@ class TaskSeeder extends Seeder
                 'name' => 'Home Page',
                 'desk' => 'Using flutter',
                 'project_id' => 1,
-                'user_id' => 1
+                'employee_id' => 1
             ],
             [
                 'name' => 'Profile Page',
                 'desk' => 'Using flutter',
                 'project_id' => 2,
-                'user_id' => 1
+                'employee_id' => 1
             ],
             [
                 'name' => 'Home UI',
                 'desk' => 'Using figma',
                 'project_id' => 1,
-                'user_id' => 2
+                'employee_id' => 2
             ],
             [
                 'name' => 'Profile UI',
                 'desk' => 'Using figma',
                 'project_id' => 2,
-                'user_id' => 2
+                'employee_id' => 2
             ],
         ];
 

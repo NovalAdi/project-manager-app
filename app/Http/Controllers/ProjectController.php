@@ -23,7 +23,7 @@ class ProjectController extends Controller
 
     public function show($id)
     {
-        $project = Project::with(['tasks','users'])->latest()->find($id);
+        $project = Project::with(['tasks','participants'])->latest()->find($id);
         if (!$project) {
             return response()->json(
                 [

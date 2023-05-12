@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
+use App\Models\Employee;
+use App\Models\Manager;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +15,8 @@ class AuthController extends Controller
 {
     public function register(Request $req)
     {
-        $validator = Validator::make($req->all(), [
+        $input = $req->all();
+        $validator = Validator::make($input, [
             'username' => 'required|unique:users,username',
             'email' => 'required|unique:users,email',
             'password' => 'required|string|min:8',
@@ -31,17 +35,31 @@ class AuthController extends Controller
         }
 
         $passwordHash = Hash::make($req->input('password'));
-        $input = [
+        $inputuser = [
             'username' => $req->input('username'),
             'email' => $req->input('email'),
             'password' => $passwordHash
         ];
 
-        $user = User::create($input);
+        $user = User::create($inputuser);
 
         $token = $user->createToken('authToken')->plainTextToken;
 
         $user->assignRole($req->input('role'));
+
+        if ($input['role'] == 'manager') {
+            Manager::create(
+                [
+                    'user_id' => $user->id
+                ]
+            );
+        } else {
+            Employee::create(
+                [
+                    'user_id' => $user->id
+                ]
+            );
+        }
 
         $response = [
             'id' => $user->id,

@@ -9,16 +9,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Login</title>
+    <title>Login</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ asset('sbadmin') }}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="{{ asset('sbadmin') }}/css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
@@ -38,19 +38,21 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Login</h1>
                             </div>
-                            <form class="user">
+                            <form class="user" action="{{ route('login.post') }}" method="POST"
+                                enctype="multipart/form-data˝">
+                                @csrf
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-user"
-                                        id="exampleInputEmail" aria-describedby="emailHelp"
-                                        placeholder="Email / Username...">
+                                    <input name="username" class="form-control form-control-user" id="exampleInputEmail"
+                                        aria-describedby="emailHelp" placeholder="Email / Username...">
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control form-control-user"
+                                    <input type="password" name="password" class="form-control form-control-user"
                                         id="exampleInputPassword" placeholder="Password">
                                 </div>
-                                <a href="index.html" class="btn btn-primary btn-user btn-block">
-                                    Login
-                                </a>
+                                <div class="form-group">
+                                    <button type="submit"
+                                        class="form-control btn btn-primary rounded submit px-10">Login</button>
+                                </div>
                             </form>
                             <!-- <hr>
                             <div class="text-center">
@@ -67,14 +69,14 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('sbadmin') }}/vendor/jquery/jquery.min.js"></script>
+    <script src="{{ asset('sbadmin') }}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="{{ asset('sbadmin') }}/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="{{ asset('sbadmin') }}/js/sb-admin-2.min.js"></script>
 
 </body>
 

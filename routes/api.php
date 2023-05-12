@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\EmployeeProjectController;
+use App\Http\Controllers\ManagerEmployeeController;
 use App\Http\Controllers\PermissionRoleController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\UserProjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,7 +44,7 @@ Route::group(['middleware' => ['auth:sanctum',]], function () {
     Route::post('logout', [AuthController::class, 'logout']);
 
     // task
-    Route::get('/task', [TaskController::class, 'index'])->middleware('permission:read-task');
+    Route::get('/task', [TaskController::class, 'index']);
     Route::get('/task/{id}', [TaskController::class, 'show']);
     Route::post('/task', [TaskController::class, 'create']);
     Route::post('/task/{id}', [TaskController::class, 'update']);
@@ -58,14 +59,17 @@ Route::group(['middleware' => ['auth:sanctum',]], function () {
 
     // user
     Route::get('/user', [UserController::class, 'index']);
-    Route::get('/manager/{id}', [UserController::class, 'showManager'])->middleware('permission:show-manager');
-    Route::get('/user/{id}', [UserController::class, 'showEmployee'])->middleware('permission:show-employee');
+    Route::get('/user/{id}', [UserController::class, 'show']);
     Route::post('/user/{id}', [UserController::class, 'update']);
     Route::delete('/user/{id}', [UserController::class, 'delete']);
 
-    //userProject
-    Route::get('/userProject', [UserProjectController::class, 'index']);
-    Route::get('/userProject/{id}', [UserProjectController::class, 'show']);
-    Route::post('/userProject', [UserProjectController::class, 'create']);
+    //employee-project
+    Route::get('/employee-project/{id}', [EmployeeProjectController::class, 'show']);
+    Route::post('/employee-project', [EmployeeProjectController::class, 'create']);
+
+    //managerEmployee
+    Route::get('/managerEmployee', [ManagerEmployeeController::class, 'index']);
+    Route::get('/managerEmployee/{id}', [ManagerEmployeeController::class, 'show']);
+    Route::post('/managerEmployee', [ManagerEmployeeController::class, 'create']);
 });
 

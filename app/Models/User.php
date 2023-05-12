@@ -39,18 +39,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function employees_project()
+    public function manager()
     {
-        return $this->belongsToMany(Project::class, 'user_projects', 'user_id', 'project_id');
+        return $this->hasOne(Manager::class, 'user_id');
     }
 
-    public function managers_project()
+    public function employee()
     {
-        return $this->hasMany(Project::class);
-    }
-
-    public function tasks()
-    {
-        return $this->hasMany(Task::class);
+        return $this->hasOne(Employee::class, 'user_id');
     }
 }

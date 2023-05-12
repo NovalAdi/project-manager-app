@@ -16,8 +16,8 @@ class Task extends Model
         return $this->belongsTo(Project::class, 'project_id');
     }
 
-    public function user()
+    public function employee()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(employee::class, 'employee_id');
     }
 }

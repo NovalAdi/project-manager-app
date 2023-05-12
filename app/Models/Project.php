@@ -13,12 +13,12 @@ class Project extends Model
 
     public function manager()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Manager::class, 'manager_id');
     }
 
     public function participants()
     {
-        return $this->belongsToMany(User::class, 'user_projects', 'project_id', 'user_id');
+        return $this->belongsToMany(Employee::class, 'employee_project', 'project_id', 'employee_id');
     }
 
     public function tasks()

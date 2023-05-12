@@ -22,29 +22,9 @@ class UserController extends Controller
         );
     }
 
-    public function showManager($id)
+    public function show($id)
     {
-        $user = User::with(['managers_project'])->find($id);
-        if (!$user) {
-            return response()->json(
-                [
-                    'status' => false,
-                    'message' => 'User not found'
-                ]
-            );
-        }
-
-        return response()->json(
-            [
-                'status' => true,
-                'data' => $user
-            ]
-        );
-    }
-
-    public function showEmployee($id)
-    {
-        $user = User::with(['tasks', 'employees_project'])->find($id);
+        $user = User::find($id);
         if (!$user) {
             return response()->json(
                 [

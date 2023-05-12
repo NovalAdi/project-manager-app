@@ -23,8 +23,6 @@ class PermissionSeeder extends Seeder
             'read-project',
             'update-project',
             'delete-project',
-            'show-manager',
-            'show-employee',
         ];
         foreach ($permissions as $permission) {
             Permission::create([
@@ -40,7 +38,6 @@ class PermissionSeeder extends Seeder
             'read-task',
             'update-task',
             'read-project',
-            'show-employee'
         ]);
     }
 }
