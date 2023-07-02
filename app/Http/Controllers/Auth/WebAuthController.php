@@ -13,6 +13,11 @@ class WebAuthController extends Controller
         return view('auth.login');
     }
 
+    public function dataNotFound()
+    {
+        return view('layout.404');
+    }
+
     public function login(Request $req)
     {
         $validator = Validator::make($req->all(), [

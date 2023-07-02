@@ -41,11 +41,21 @@ class User extends Authenticatable
 
     public function manager()
     {
-        return $this->hasOne(Manager::class, 'user_id');
+        return $this->hasOne(Manager::class);
     }
 
     public function employee()
     {
-        return $this->hasOne(Employee::class, 'user_id');
+        return $this->hasOne(Employee::class);
+    }
+
+    public function to()
+    {
+        return $this->hasMany(Notif::class, 'to');
+    }
+
+    public function from()
+    {
+        return $this->hasMany(Notif::class, 'from');
     }
 }

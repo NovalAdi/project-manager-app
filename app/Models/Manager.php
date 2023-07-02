@@ -20,4 +20,9 @@ class Manager extends Model
     {
         return $this->belongsToMany(Employee::class, 'manager_employee', 'manager_id', 'employee_id');
     }
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 }

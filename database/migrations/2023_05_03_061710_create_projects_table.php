@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('desk');
             $table->foreignId('manager_id')->constrained('managers')->onUpdate('cascade')->onDelete('cascade');
             $table->string('token')->unique();
-            $table->dateTime('deadline');
+            $table->date('deadline');
             $table->timestamps();
         });
     }

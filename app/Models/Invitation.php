@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Task extends Model
+class Invitation extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
+
+    protected $table = 'invitations';
 
     public function project()
     {
@@ -18,11 +20,11 @@ class Task extends Model
 
     public function employee()
     {
-        return $this->belongsTo(employee::class, 'employee_id');
+        return $this->belongsTo(Employee::class, 'employee_id');
     }
 
     public function notif()
     {
-        return $this->belongsTo(Notif::class, 'task_id');
+        return $this->belongsTo(Notif::class, 'invitation_id');
     }
 }

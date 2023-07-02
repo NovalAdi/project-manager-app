@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\EmployeeProjectController;
+use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\ManagerEmployeeController;
+use App\Http\Controllers\NotifController;
 use App\Http\Controllers\PermissionRoleController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RoleController;
@@ -39,20 +41,26 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
 // ! Authenticated
-Route::group(['middleware' => ['auth:sanctum',]], function () {
+Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('logout', [AuthController::class, 'logout']);
 
+    // notif
+    Route::get('user/{id}/notif', [NotifController::class, 'getForEmployee']);
+
     // task
-    Route::get('/task', [TaskController::class, 'index']);
-    Route::get('/task/{id}', [TaskController::class, 'show']);
+    Route::get('/task/project/{idProject}/user/{idUser}', [TaskController::class, 'getTask']);
+    Route::get('/task/{id}', [TaskController::class, 'index']);
+    Route::get('/task/show/{id}', [TaskController::class, 'show']);
     Route::post('/task', [TaskController::class, 'create']);
     Route::post('/task/{id}', [TaskController::class, 'update']);
     Route::delete('/task/{id}', [TaskController::class, 'delete']);
 
     // project
-    Route::get('/project', [ProjectController::class, 'index']);
-    Route::get('/project/{id}', [ProjectController::class, 'show']);
+    // Route::get('/project/{id}', [ProjectController::class, 'index']);
+    Route::get('/project/main/{id}', [ProjectController::class, 'getMainProject']);
+    Route::get('/project/participants/{id}', [ProjectController::class, 'projectParticipants']);
+    Route::get('/project/show/{id}', [ProjectController::class, 'show']);
     Route::post('/project', [ProjectController::class, 'create']);
     Route::post('/project/{id}', [ProjectController::class, 'update']);
     Route::delete('/project/{id}', [ProjectController::class, 'delete']);
@@ -63,9 +71,12 @@ Route::group(['middleware' => ['auth:sanctum',]], function () {
     Route::post('/user/{id}', [UserController::class, 'update']);
     Route::delete('/user/{id}', [UserController::class, 'delete']);
 
-    //employee-project
-    Route::get('/employee-project/{id}', [EmployeeProjectController::class, 'show']);
-    Route::post('/employee-project', [EmployeeProjectController::class, 'create']);
+    //invitation
+    Route::get('/invitation/manager/{id}', [InvitationController::class, 'listManager']);
+    Route::get('/invitation/employee/{id}', [InvitationController::class, 'listEmployee']);
+    Route::post('/invitation', [InvitationController::class, 'create']);
+    Route::post('/invitation/{id}', [InvitationController::class, 'update']);
+    Route::delete('/invitation/{id}', [InvitationController::class, 'delete']);
 
     //managerEmployee
     Route::get('/managerEmployee', [ManagerEmployeeController::class, 'index']);

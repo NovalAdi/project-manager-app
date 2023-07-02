@@ -21,8 +21,13 @@ class Employee extends Model
         return $this->belongsToMany(Manager::class, 'manager_employee', 'employee_id', 'manager_id');
     }
 
-    public function projects()
+    public function invitations()
     {
-        return $this->belongsToMany(Project::class, 'employee_project', 'employee_id', 'project_id');
+        return $this->hasMany(Invitation::class);
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
     }
 }

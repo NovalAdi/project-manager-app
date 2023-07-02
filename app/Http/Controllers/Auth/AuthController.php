@@ -20,7 +20,6 @@ class AuthController extends Controller
             'username' => 'required|unique:users,username',
             'email' => 'required|unique:users,email',
             'password' => 'required|string|min:8',
-            'confirm_password' => 'required|same:password',
             'role' => 'required|exists:roles,name'
         ]);
 
@@ -46,6 +45,7 @@ class AuthController extends Controller
         $token = $user->createToken('authToken')->plainTextToken;
 
         $user->assignRole($req->input('role'));
+        $user->image = url('uploads/users/default_pp.png');
 
         if ($input['role'] == 'manager') {
             Manager::create(
@@ -61,19 +61,16 @@ class AuthController extends Controller
             );
         }
 
-        $response = [
-            'id' => $user->id,
-            'username' => $user->username,
-            'email' => $user->email,
-            'role' => $user->getRoleNames()->first(),
-            'token' => $token
+        $data = [
+            'token' => $token,
+            'user' => $user,
         ];
 
         return response()->json(
             [
                 'status' => true,
                 'message' => 'Register succeed',
-                'data' => $response
+                'data' => $data
             ]
         );
     }
@@ -106,9 +103,12 @@ class AuthController extends Controller
         if (auth()->attempt($credentials)) {
             $user = Auth::user();
             $token = $user->createToken('authToken')->plainTextToken;
+
+            $user->image = url('uploads/users/'. $user->image);
             $data = [
                 'token' => $token,
-                'user' => $user
+                'user' => $user,
+                'role' => $user->getRoleNames()->first(),
             ];
             return response()->json(
                 [

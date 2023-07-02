@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use App\Models\Manager;
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -61,9 +62,9 @@ class EmployeeProjectController extends Controller
             }
         }
 
-        $manager->employees()->sync($employee_ids);
+        $manager->employees()->attach($employee_ids);
 
-        $project->participants()->sync($employee_ids);
+        $project->participants()->attach($employee_ids);
 
         $data = DB::table('employee_project')->where('project_id', '=', $project->id)->get();
 

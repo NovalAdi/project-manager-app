@@ -34,6 +34,8 @@ class UserController extends Controller
             );
         }
 
+        $user->image = url('uploads/users/'. $user->image);
+
         return response()->json(
             [
                 'status' => true,
@@ -82,10 +84,7 @@ class UserController extends Controller
             $extension = $file->getClientOriginalExtension();
             $fileName = time() . '.' . $extension;
             $img = Image::make($file->getRealPath());
-            $img->resize(1000, 1000, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            })->save($path . $fileName);
+            $img->resize(1000, 1000)->save($path . $fileName);
             $input['image'] = $fileName;
         }
 

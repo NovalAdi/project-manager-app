@@ -16,14 +16,39 @@ class Project extends Model
         return $this->belongsTo(Manager::class, 'manager_id');
     }
 
+    public function invitation()
+    {
+        return $this->hasMany(Invitation::class);
+    }
+
     public function participants()
     {
-        return $this->belongsToMany(Employee::class, 'employee_project', 'project_id', 'employee_id');
+        return $this->belongsToMany(Employee::class, 'invitations', 'project_id', 'employee_id');
     }
 
     public function tasks()
     {
         return $this->hasMany(Task::class);
     }
+
+    public function taskTotal()
+    {
+       return $this->tasks()->count();
+    }
+    public function taskDone()
+    {
+       return $this->tasks()->where('status', 'done')->count();
+    }
+
+    public function taskUndone()
+    {
+       return $this->tasks()->where('status', 'undone')->count();
+    }
+
+    public function taskPending()
+    {
+       return $this->tasks()->where('status', 'pending')->count();
+    }
+
 
 }

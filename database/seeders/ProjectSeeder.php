@@ -22,8 +22,8 @@ class ProjectSeeder extends Seeder
                 'token' => random_int(100000, 999999)
             ],
             [
-                'name' => 'Toilet App',
-                'desk' => 'An app about Toilet',
+                'name' => 'Flutter App',
+                'desk' => 'An app using flutter',
                 'deadline' => '2023-12-24',
                 'manager_id' => 1,
                 'token' => random_int(100000, 999999)
